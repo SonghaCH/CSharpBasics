@@ -10,7 +10,6 @@ namespace BasicCSharp
 
         public static void MakeCoffe(int coffeeCount)
         {
-            coffeeCount = 0;
             int cookedCoffeeCount = (coffeeCount * 2);
             int cafe = cookedCoffeeCount;
             Console.WriteLine(cafe);
