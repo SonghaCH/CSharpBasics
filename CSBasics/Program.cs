@@ -1,36 +1,57 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+using System.Xml.Linq;
 
-namespace BasicCSharp
+namespace CSBasics
 {
-    public class Player
-    {
-        public void UseSkill(Skill dataID)
-        {
-            Console.WriteLine($"{dataID}");
-        }
-
-    }
-
-    public class Skill
-    {
-        public void UsedSkillByExecuteSkill(string dataID)
-        {
-            dataID = string.Empty;
-        }
-    }
-
-
     internal class Program
     {
-        
-        public static void Main(string[] args)
+        public class Player
         {
-           Player player1 = new Player();
-           List<Skill> skillList = new List<Skill>();
-           skillList.Add(new Skill());
-           skillList.Add(new Skill());
+            public List<Skill> m_mySkillList = new List<Skill>();
+
+
+            public void UseSkill(string skillDataId)
+            {
+                Console.WriteLine(skillDataId);
+            }
+        }
+
+
+
+
+        public class Skill
+        {
+
+            public void ExecuteSkill()
+            {
+                Console.WriteLine("스킬을 사용함");
+            }
+        }
+
+
+
+
+
+
+
+        static void Main(string[] args)
+        {
+            Player player = new Player();
+            player.UseSkill("dummySkill_01");
+
+            player.m_mySkillList.Add(new Skill());
+            player.m_mySkillList.Add(new Skill());
+
+            foreach (var skill in player.m_mySkillList)
+            {
+                if (skill == null)
+                {
+                    continue;
+                }
+                skill.ExecuteSkill();
+            }
 
         }
     }
