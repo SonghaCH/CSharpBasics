@@ -2,23 +2,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using static CSBasics.Program;
 
 namespace CSBasics
 {
+
     internal class Program
     {
         public class Player
         {
-            public List<Skill> m_mySkillList = new List<Skill>();
-
+            private List<Skill> m_mySkillList = new List<Skill>();
 
             public void UseSkill(string skillDataId)
             {
+                foreach (var skill in m_mySkillList)
+                {
+                    if (skill == null)
+                    {
+                        continue;
+                    }
+                    skill.ExecuteSkill();
+                }
+
                 Console.WriteLine(skillDataId);
             }
+
+            public void InitAllSkill()
+            {
+                m_mySkillList.Add(new Skill());
+                m_mySkillList.Add(new Skill());
+            }
         }
-
-
 
 
         public class Skill
@@ -31,24 +45,12 @@ namespace CSBasics
         }
 
 
-
         static void Main(string[] args)
         {
             Player player = new Player();
+            player.InitAllSkill();
             player.UseSkill("dummySkill_01");
-
-            player.m_mySkillList.Add(new Skill());
-            player.m_mySkillList.Add(new Skill());
-
-            foreach (var skill in player.m_mySkillList)
-            {
-                if (skill == null)
-                {
-                    continue;
-                }
-                skill.ExecuteSkill();
-            }
-
         }
     }
+}
 }
