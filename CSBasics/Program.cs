@@ -1,37 +1,91 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
+using static CSBasics.Program;
 
 namespace CSBasics
 {
-    internal class Program
+    public class Furniture
     {
-        public class FantasyCreature
+        public int m_furnitureID;
+        public string m_furnitureName;
+        public string m_furnitureDescription;
+
+        public void InitFurnitureInfo()
         {
-            public void Move()
+            m_furnitureID = 0;
+            m_furnitureName = string.Empty;
+            m_furnitureDescription = string.Empty;
+
+        }
+
+    }
+
+    public class FurnitureStore
+    {
+        public Dictionary<string, Furniture> m_todayFurniture = new Dictionary<string, Furniture>();
+        public void bringTodayFurniture()
+        {
+            Furniture furniture = new Furniture();
+            furniture.InitFurnitureInfo();
+
+
+            List<string> makeFurnitureListName = new List<string>();
+            makeFurnitureListName.Add("냉장고");
+            makeFurnitureListName.Add("TV");
+            makeFurnitureListName.Add("스타일러");
+            makeFurnitureListName.Add("라디오");
+            makeFurnitureListName.Add("컴퓨터");
+            makeFurnitureListName.Add("피아노");
+            makeFurnitureListName.Add("선풍기");
+            makeFurnitureListName.Add("에어컨");
+            makeFurnitureListName.Add("세탁기");
+            makeFurnitureListName.Add("의자");
+
+            for (int i = 0; i < makeFurnitureListName.Count; i++)
             {
-                Console.WriteLine("움직인다~");
+                Furniture addFurniture = new Furniture();
+                addFurniture.InitFurnitureInfo();
+
+                addFurniture.m_furnitureName = makeFurnitureListName[i];
+                addFurniture.m_furnitureID = i;
+
+                m_todayFurniture.Add(makeFurnitureListName[i], addFurniture);
+
+            }
+
+
+
+
+        }
+
+        public void openStore()
+        {
+            foreach (Furniture OpenItem in m_todayFurniture.Values)
+            {
+                Console.WriteLine($"가구 Id : {OpenItem.m_furnitureID}, 가구 이름 : {OpenItem.m_furnitureName}");
             }
         }
+    }
+
+
+
+    internal class Program
+    {
+
+
+
+
 
         static void Main(string[] args)
         {
-            var fantasyCreatureDictionary = new Dictionary<string, FantasyCreature>(); //딕셔너리 만들기
-
-            var dragon = new FantasyCreature();                    //키와 밸류 집어넣기
-            fantasyCreatureDictionary.Add("드래곤", dragon);
-            var nineTaleFox = new FantasyCreature();
-            fantasyCreatureDictionary.Add("구미호", nineTaleFox); 
-            var kraken = new FantasyCreature();
-            fantasyCreatureDictionary.Add("크라켄", kraken);
-
-            FantasyCreature foundFantasyCreature = fantasyCreatureDictionary["드래곤"]; //사전찾기
-
-            if (foundFantasyCreature != null)//널체크
-            {
-                foundFantasyCreature.Move();
-                fantasyCreatureDictionary.Remove("드래곤");
-            }
+            Furniture furniture1 = new Furniture();
+            FurnitureStore bringFurniture = new FurnitureStore();
+            bringFurniture.bringTodayFurniture();
+            bringFurniture.openStore();
 
         }
+
     }
 }
