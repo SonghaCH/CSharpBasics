@@ -6,99 +6,61 @@ using static CSBasics.Program;
 
 namespace CSBasics
 {
-
     public class Player
     {
-       
 
-        public string m_name { get; private set; }
-        public int m_atk { get; private set; }
-        public int m_hp { get; private set; }
+        public string Name { get; set; }
 
-        public Player(string name,int attack,int hp)
+        public event Action OnEquip;
+
+        public event Action OnSwing;
+
+
+        public Player(string name)
         {
-            m_name = name;
-            m_atk = attack;
-            m_hp = hp;
-        }
-
-        public void ChangeName(string playerName)
-        {
-            m_name = playerName;
+            this.Name = name;
         }
 
 
-        public void ChangeAtk(int playerAtk)
+        public void EquipWeapon()
         {
-            m_atk = playerAtk;
-        }
-        public void ChangeHp(int playerCurentHp)
-        {
-            m_hp = playerCurentHp;
+            Console.Write($"{this.Name}이 ");
+            OnEquip?.Invoke();
+            OnEquip = null;
         }
 
-        public void Attack(Monster targetMonster)
+        public void SwingWeapon()
         {
-            Console.WriteLine($"{m_name} 이/가  {targetMonster.m_name} 을/를 공격했다.~");
-            Console.WriteLine($"{m_atk}만큼의 피해를 주었다.");
-            targetMonster.TakeDamage(m_atk);
-
-        }
-        public void TakeDamage(int monsterDamage)
-        {
-            m_hp = m_hp - monsterDamage;
-            Console.WriteLine($"{m_name}의 체력이 {m_hp}가 되었다.~");
-
+            Console.Write($"{this.Name}이 ");
+            OnSwing?.Invoke();
+            OnSwing = null;
         }
 
 
     }
 
-    public class Monster
+    public class Weapon
     {
-        public string m_name { get; private set; }
-        public int m_atk { get; private set; }
-        public int m_hp { get; private set; }
+        public string Name { get; set; }
 
-        public Monster(string name, int attack, int hp)
+        public Weapon(string name)
         {
-            m_name = name;
-            m_atk = attack;
-            m_hp = hp;
+            this.Name = name;
         }
 
-        public void ChangeName(string monsterName)
+        public void EqequipedWeapon()
         {
-            m_name = monsterName;
+
+            Console.WriteLine($"{this.Name}을 장착하였습니다.");
         }
 
-        public void ChangeAtk(int monsterAtk)
+        public void SwingedWeapon()
         {
-            m_atk = monsterAtk;
-        }
-        public void ChangeHp(int monseterCurentHp)
-        {
-            m_hp = monseterCurentHp;
-        }
-        
+            Console.WriteLine($"{this.Name}을 휘둘렀다.");
 
-        public void Attack(Player targetPlayer)
-        {
-            Console.WriteLine($"{m_name} 이/가  {targetPlayer.m_name} 을/를 공격했다.~");
-            Console.WriteLine($"{m_atk}만큼의 피해를 주었다.");
-            targetPlayer.TakeDamage(m_atk);
-
-
-        }
-        public void TakeDamage(int playerDamage)
-        {
-            m_hp = m_hp - playerDamage; 
-            Console.WriteLine($"{m_name}의 체력이 {m_hp}가 되었다.~");
         }
 
     }
-
-
 
 
 
@@ -107,11 +69,20 @@ namespace CSBasics
 
         static void Main(string[] args)
         {
-            Player player1 = new Player("잠만보",50,1000);
-            Monster monster1 = new Monster("리자몽",100,500);
-            player1.Attack(monster1);
-            monster1.Attack(player1);
-           
+            Player player111 = new Player("손오공");
+            Weapon weapon222 = new Weapon("여의봉");
+            player111.OnEquip += weapon222.EqequipedWeapon;
+            player111.OnSwing += weapon222.SwingedWeapon;
+            player111.EquipWeapon();
+            player111.SwingWeapon();
+
+            
+
+
+
+
+
+
 
         }
 
