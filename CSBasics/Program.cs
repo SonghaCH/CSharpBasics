@@ -11,10 +11,6 @@ namespace CSBasics
 
         public string Name { get; set; }
 
-        public event Action OnEquip;
-
-        public event Action OnSwing;
-
 
         public Player(string name)
         {
@@ -22,18 +18,16 @@ namespace CSBasics
         }
 
 
-        public void EquipWeapon()
+        public void EquipWeapon(Action OnEquip)
         {
             Console.Write($"{this.Name}이 ");
             OnEquip?.Invoke();
-            OnEquip = null;
         }
 
-        public void SwingWeapon()
+        public void SwingWeapon(Action OnSwing)
         {
             Console.Write($"{this.Name}이 ");
             OnSwing?.Invoke();
-            OnSwing = null;
         }
 
 
@@ -71,10 +65,10 @@ namespace CSBasics
         {
             Player player111 = new Player("손오공");
             Weapon weapon222 = new Weapon("여의봉");
-            player111.OnEquip += weapon222.EqequipedWeapon;
-            player111.OnSwing += weapon222.SwingedWeapon;
-            player111.EquipWeapon();
-            player111.SwingWeapon();
+            //player111.OnEquip += weapon222.EqequipedWeapon;
+            //player111.OnSwing += weapon222.SwingedWeapon;
+            player111.EquipWeapon(weapon222.EqequipedWeapon);
+            player111.SwingWeapon(weapon222.SwingedWeapon);
 
             
 
